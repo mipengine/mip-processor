@@ -1,0 +1,38 @@
+{
+    "name": "mip-processor",
+    "description": "MIP Base Processor Class",
+    "version": "1.0.0",
+
+    "keywords": [
+        "mip",
+        "tool",
+        "build",
+        "processor"
+    ],
+
+    "files": [
+        "lib",
+        "index.js"
+    ],
+
+    "dependencies": {
+        "minimatch": "^3.0.3",
+        "object-assign": "^4.1.0"
+    },
+
+    "engines": {
+        "node": ">= 4.0.0"
+    },
+
+    "contributors": [
+        { "name": "erik", "email": "errorrik@gmail.com" }
+    ],
+
+    "main": "index.js",
+
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mipengine/mip-processor.git"
+    }
+}
