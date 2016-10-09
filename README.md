@@ -1,8 +1,10 @@
 mip-processor
 ===========
 
-
 MIP Base Processor Class
+
+
+<a href="https://circleci.com/gh/mipengine/mip-processor/tree/master"><img src="https://img.shields.io/circleci/project/mipengine/mip-processor/master.svg?style=flat-square" alt="Build Status"></a>
 
 
 ### usage
