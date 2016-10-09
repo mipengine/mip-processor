@@ -20,6 +20,14 @@
         "object-assign": "^4.1.0"
     },
 
+    "devDependencies": {
+        "jasmine": "^2.5.2"
+    },
+
+    "scripts": {
+        "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
+    },
+
     "engines": {
         "node": ">= 4.0.0"
     },
