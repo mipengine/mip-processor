@@ -1,9 +1,11 @@
-mip-processor (MIP Base Processor Class)
+mip-processor
 ===========
 
+
+MIP Base Processor Class
+
+
 ### usage
-
-
 
 ```js
 var MipProcessor = require('mip-processor');
