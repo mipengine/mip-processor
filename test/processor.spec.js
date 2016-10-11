@@ -10,8 +10,13 @@ MockFile.prototype.setData = function (data) {
     this.data = data
 };
 
+
+MockFile.prototype.getData = function () {
+    return this.data;
+};
+
 function MockBuilder() {
-    this.processFiles = [
+    this.files = [
         new MockFile({
             data: '1',
             fullPath: '/project/1.js',
@@ -35,8 +40,8 @@ function MockBuilder() {
     ];
 }
 
-MockBuilder.prototype.getProcessFiles = function () {
-    return this.processFiles;
+MockBuilder.prototype.getFiles = function () {
+    return this.files;
 };
 
 describe("Processor Base", function () {
@@ -81,7 +86,7 @@ describe("Processor Base", function () {
             processFile: function (file) {
                 return new Promise(function (resolve, reject) {
                     setTimeout(function () {
-                        file.setData(file.data + 1);
+                        file.setData(file.getData() + 1);
                         resolve();
                     }, 1);
                 });
@@ -93,10 +98,10 @@ describe("Processor Base", function () {
 
         var builder = new MockBuilder();
         processor.process(builder).then(function () {
-            var files = builder.getProcessFiles();
-            expect(files[0].data).toBe('11');
-            expect(files[1].data).toBe('21');
-            expect(files[2].data).toBe('31');
+            var files = builder.getFiles();
+            expect(files[0].getData()).toBe('11');
+            expect(files[1].getData()).toBe('21');
+            expect(files[2].getData()).toBe('31');
             done();
         });
     });
@@ -104,7 +109,7 @@ describe("Processor Base", function () {
     it("derive, override processFile, sync, return nothing", function (done) {
         var CustomProcessor = Processor.derive({
             processFile: function (file) {
-                file.setData(file.data + 1);
+                file.setData(file.getData() + 1);
             }
         });
         var processor = new CustomProcessor({
@@ -113,10 +118,10 @@ describe("Processor Base", function () {
 
         var builder = new MockBuilder();
         processor.process(builder).then(function () {
-            var files = builder.getProcessFiles();
-            expect(files[0].data).toBe('11');
-            expect(files[1].data).toBe('21');
-            expect(files[2].data).toBe('31');
+            var files = builder.getFiles();
+            expect(files[0].getData()).toBe('11');
+            expect(files[1].getData()).toBe('21');
+            expect(files[2].getData()).toBe('31');
             done();
         });
     });
@@ -125,7 +130,7 @@ describe("Processor Base", function () {
     it("derive, files should be filter", function (done) {
         var CustomProcessor = Processor.derive({
             processFile: function (file) {
-                file.setData(file.data + 1);
+                file.setData(file.getData() + 1);
             }
         });
         var processor = new CustomProcessor({
@@ -134,11 +139,11 @@ describe("Processor Base", function () {
 
         var builder = new MockBuilder();
         processor.process(builder).then(function () {
-            var files = builder.getProcessFiles();
-            expect(files[0].data).toBe('11');
-            expect(files[1].data).toBe('21');
-            expect(files[2].data).toBe('31');
-            expect(files[3].data).toBe('4');
+            var files = builder.getFiles();
+            expect(files[0].getData()).toBe('11');
+            expect(files[1].getData()).toBe('21');
+            expect(files[2].getData()).toBe('31');
+            expect(files[3].getData()).toBe('4');
             done();
         });
     });
