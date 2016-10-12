@@ -15,6 +15,7 @@ MockFile.prototype.getData = function () {
     return this.data;
 };
 
+
 function MockBuilder() {
     this.files = [
         new MockFile({
@@ -43,6 +44,8 @@ function MockBuilder() {
 MockBuilder.prototype.getFiles = function () {
     return this.files;
 };
+
+MockBuilder.prototype.notify = function () {};
 
 describe("Processor Base", function () {
 
