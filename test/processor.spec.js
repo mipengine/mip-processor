@@ -37,6 +37,26 @@ function MockBuilder() {
             data: '4',
             fullPath: '/project/4.js',
             relativePath: '4.css'
+        }),
+        new MockFile({
+            data: '1',
+            fullPath: '/project/dep/1.js',
+            relativePath: 'dep/1.js'
+        }),
+        new MockFile({
+            data: '2',
+            fullPath: '/project/dep/2.js',
+            relativePath: 'dep/2.js'
+        }),
+        new MockFile({
+            data: '2',
+            fullPath: '/project/dep/2.css',
+            relativePath: 'dep/2.css'
+        }),
+        new MockFile({
+            data: 'root = true',
+            fullPath: '/project/.editorconfig',
+            relativePath: '.editorconfig'
         })
     ];
 }
@@ -59,11 +79,43 @@ describe("Processor Base", function () {
         expect(processor.b).toBe('2');
     });
 
-    it("has default files option", function () {
+    it("default select no file", function () {
         var processor = new Processor();
+        var files = processor.selectFiles(new MockBuilder());
 
-        expect(processor.files instanceof Array).toBeTruthy();
-        expect(processor.files.length).toBe(0);
+        expect(files instanceof Array).toBeTruthy();
+        expect(files.length).toBe(0);
+    });
+
+    it("dont select hidden file", function () {
+        var processor = new Processor({
+            files: ['**/*']
+        });
+        var files = processor.selectFiles(new MockBuilder());
+
+        expect(files instanceof Array).toBeTruthy();
+        expect(files.length).toBe(7);
+        files.forEach(function (file) {
+            expect(/(^\.|\/\.)/.test(file.relativePath)).toBe(false);
+        });
+    });
+
+    it("complex select files", function () {
+        var processor = new Processor({
+            files: [
+                '**/*.js',
+                '!dep/*.js',
+                'dep/*.css',
+                'dep/2.js'
+            ]
+        });
+        var files = processor.selectFiles(new MockBuilder());
+
+        expect(files instanceof Array).toBeTruthy();
+        expect(files.length).toBe(5);
+        files.forEach(function (file) {
+            expect(file.relativePath.indexOf('dep/1.js') < 0).toBeTruthy();
+        });
     });
 
     it("files option should be override by constructor options", function () {
